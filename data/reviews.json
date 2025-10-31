@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "movieId": 1,
+    "userName": "John Doe",
+    "rating": 5,
+    "reviewText": "An absolute masterpiece! The action sequences are incredible and the story is mind-bending. A must-watch for all sci-fi fans.",
+    "createdAt": "2025-10-19T10:30:00Z"
+  },
+  {
+    "id": 2,
+    "movieId": 1,
+    "userName": "Jane Smith",
+    "rating": 4,
+    "reviewText": "Great movie with excellent cinematography. The philosophical elements really make you think about reality.",
+    "createdAt": "2025-10-18T14:20:00Z"
+  },
+  {
+    "id": 5,
+    "movieId": 3,
+    "userName": "David Brown",
+    "rating": 5,
+    "reviewText": "Heath Ledger's performance as the Joker is unforgettable. The entire movie is perfection from start to finish.",
+    "createdAt": "2025-10-15T11:30:00Z"
+  },
+  {
+    "id": 6,
+    "movieId": 3,
+    "userName": "Emma Davis",
+    "rating": 5,
+    "reviewText": "The Dark Knight redefined superhero movies. Nolan's direction combined with incredible performances makes this a classic.",
+    "createdAt": "2025-10-14T13:20:00Z"
+  },
+  {
+    "id": 7,
+    "movieId": 4,
+    "userName": "Robert Wilson",
+    "rating": 5,
+    "reviewText": "Interstellar is a visual and emotional journey. The scope and ambition are unmatched in modern cinema.",
+    "createdAt": "2025-10-13T10:00:00Z"
+  },
+  {
+    "id": 8,
+    "movieId": 4,
+    "userName": "Lisa Anderson",
+    "rating": 4,
+    "reviewText": "A stunning epic about humanity's future. Some pacing issues but overall a remarkable achievement.",
+    "createdAt": "2025-10-12T15:30:00Z"
+  },
+  {
+    "id": 9,
+    "movieId": 5,
+    "userName": "Chris Martin",
+    "rating": 5,
+    "reviewText": "Pulp Fiction is a masterclass in filmmaking. Every scene is quotable and the ensemble cast is perfect.",
+    "createdAt": "2025-10-11T12:15:00Z"
+  },
+  {
+    "id": 10,
+    "movieId": 5,
+    "userName": "Amanda Taylor",
+    "rating": 4,
+    "reviewText": "A bold and innovative film that changed cinema. Tarantino's dialogue and direction are exemplary.",
+    "createdAt": "2025-10-10T09:45:00Z"
+  },
+  {
+    "id": 11,
+    "movieId": 7,
+    "userName": "Tom Harris",
+    "rating": 5,
+    "reviewText": "The Shawshank Redemption is perfection. The friendship between Andy and Red is deeply moving and the ending is powerful.",
+    "createdAt": "2025-10-09T14:00:00Z"
+  },
+  {
+    "id": 12,
+    "movieId": 7,
+    "userName": "Jessica White",
+    "rating": 5,
+    "reviewText": "An inspiring story about hope and redemption. This film never gets old no matter how many times you watch it.",
+    "createdAt": "2025-10-08T11:20:00Z"
+  },
+  {
+    "id": 13,
+    "movieId": 10,
+    "userName": "Paul Miller",
+    "rating": 5,
+    "reviewText": "The Godfather is the greatest film ever made. A true masterpiece with perfect performances and direction.",
+    "createdAt": "2025-10-07T16:30:00Z"
+  },
+  {
+    "id": 14,
+    "movieId": 10,
+    "userName": "Nicole Garcia",
+    "rating": 5,
+    "reviewText": "An epic saga that defined mafia cinema. Coppola's vision and the cast create something timeless.",
+    "createdAt": "2025-10-06T13:10:00Z"
+  },
+  {
+    "id": 15,
+    "movieId": 11,
+    "userName": "Kevin Lee",
+    "rating": 5,
+    "reviewText": "Fight Club is brilliantly crafted with an incredible twist. The themes about society are still relevant today.",
+    "createdAt": "2025-10-05T10:45:00Z"
+  },
+  {
+    "id": 16,
+    "movieId": 11,
+    "userName": "Rachel Green",
+    "rating": 4,
+    "reviewText": "A gripping psychological thriller with stellar performances from Pitt and Norton. Dark and thought-provoking.",
+    "createdAt": "2025-10-04T15:15:00Z"
+  },
+  {
+    "id": 17,
+    "movieId": 13,
+    "userName": "Mark Parker",
+    "rating": 4,
+    "reviewText": "The Avengers brings together an excellent ensemble cast. A fun and entertaining superhero adventure.",
+    "createdAt": "2025-10-03T12:30:00Z"
+  },
+  {
+    "id": 18,
+    "movieId": 13,
+    "userName": "Sophia Clark",
+    "rating": 4,
+    "reviewText": "Great action and humor. The chemistry between the characters makes this superhero team-up exciting.",
+    "createdAt": "2025-10-02T09:50:00Z"
+  },
+  {
+    "id": 19,
+    "movieId": 14,
+    "userName": "James Robinson",
+    "rating": 5,
+    "reviewText": "Jurassic Park is still the best dinosaur movie ever made. Spielberg's vision and the practical effects are amazing.",
+    "createdAt": "2025-10-01T14:20:00Z"
+  },
+  {
+    "id": 20,
+    "movieId": 14,
+    "userName": "Victoria Hall",
+    "rating": 4,
+    "reviewText": "A thrilling adventure that holds up incredibly well. The dinosaur sequences are iconic and the story is engaging.",
+    "createdAt": "2025-09-30T11:00:00Z"
+  }
+]

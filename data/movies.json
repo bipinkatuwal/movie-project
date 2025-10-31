@@ -1,0 +1,447 @@
+[
+  {
+    "id": 1,
+    "title": "The Matrix",
+    "year": 1999,
+    "genre": [
+      "Sci-Fi",
+      "Action"
+    ],
+    "rating": 8.7,
+    "director": "Wachowski Brothers",
+    "runtime": 136,
+    "synopsis": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+    "cast": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVhLWI0MTEtMDM4YTI1N2E5ODcyXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 8,
+    "averageReviewRating": 4.5
+  },
+  {
+    "id": 3,
+    "title": "Inceptions",
+    "year": 2008,
+    "genre": [
+      "Romantic"
+    ],
+    "rating": 9,
+    "director": "Christopher Nolan",
+    "runtime": 152,
+    "synopsis": "When the menace known as the Joker wreaks havoc on Gotham, Batman must accept one of the greatest psychological and physical tests.",
+    "cast": [
+      "Christian Bale",
+      "Heath Ledger",
+      "Aaron Eckhart"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTk0MTQ3MzAyOV5BMl5BanBnXkFtZWcwODg0OTk0Nw@@._V1_SX300.jpg",
+    "reviewCount": 15,
+    "averageReviewRating": 4.8
+  },
+  {
+    "id": 4,
+    "title": "Interstellar",
+    "year": 2014,
+    "genre": [
+      "Sci-Fi",
+      "Drama",
+      "Adventure"
+    ],
+    "rating": 8.6,
+    "director": "Christopher Nolan",
+    "runtime": 169,
+    "synopsis": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+    "cast": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 10,
+    "averageReviewRating": 4.6
+  },
+  {
+    "id": 5,
+    "title": "Pulp Fiction",
+    "year": 1994,
+    "genre": [
+      "Crime",
+      "Drama"
+    ],
+    "rating": 8.9,
+    "director": "Quentin Tarantino",
+    "runtime": 154,
+    "synopsis": "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.",
+    "cast": [
+      "John Travolta",
+      "Samuel L. Jackson",
+      "Uma Thurman"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItMDJlODU2YTY4ZDc3XkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 14,
+    "averageReviewRating": 4.7
+  },
+  {
+    "id": 6,
+    "title": "Forrest Gump",
+    "year": 1994,
+    "genre": [
+      "Drama",
+      "Romance"
+    ],
+    "rating": 8.8,
+    "director": "Robert Zemeckis",
+    "runtime": 142,
+    "synopsis": "The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold through the perspective of an Alabama man.",
+    "cast": [
+      "Tom Hanks",
+      "Sally Field",
+      "Gary Sinise"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY0d4Yy00NjY1LWIyNTYtYzZlODQzNzA1ZDllXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 11,
+    "averageReviewRating": 4.5
+  },
+  {
+    "id": 7,
+    "title": "The Shawshank Redemption",
+    "year": 1994,
+    "genre": [
+      "Drama"
+    ],
+    "rating": 9.3,
+    "director": "Frank Darabont",
+    "runtime": 142,
+    "synopsis": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+    "cast": [
+      "Tim Robbins",
+      "Morgan Freeman"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNTA2NDI3OTAtODg5Ny00MzAxLWEyN2ItYzg5YjE0YzhhZTdjXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 18,
+    "averageReviewRating": 4.9
+  },
+  {
+    "id": 8,
+    "title": "Gladiator",
+    "year": 2000,
+    "genre": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "rating": 8.5,
+    "director": "Ridley Scott",
+    "runtime": 155,
+    "synopsis": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
+    "cast": [
+      "Russell Crowe",
+      "Joaquin Phoenix",
+      "Lucilla"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkM2E1XkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 9,
+    "averageReviewRating": 4.4
+  },
+  {
+    "id": 9,
+    "title": "Avatar",
+    "year": 2009,
+    "genre": [
+      "Sci-Fi",
+      "Adventure",
+      "Fantasy"
+    ],
+    "rating": 7.8,
+    "director": "James Cameron",
+    "runtime": 162,
+    "synopsis": "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world.",
+    "cast": [
+      "Sam Worthington",
+      "Zoe Saldana",
+      "Stephen Lang"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjEyOTYyMzUxNl5BMl5BanBnXkFtZWcwNzg0OTk0Nw@@._V1_SX300.jpg",
+    "reviewCount": 13,
+    "averageReviewRating": 4.3
+  },
+  {
+    "id": 10,
+    "title": "The Godfather",
+    "year": 1972,
+    "genre": [
+      "Crime",
+      "Drama"
+    ],
+    "rating": 9.2,
+    "director": "Francis Ford Coppola",
+    "runtime": 175,
+    "synopsis": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his youngest son.",
+    "cast": [
+      "Marlon Brando",
+      "Al Pacino",
+      "James Caan"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWFjNzItNjk1Z201ZGM4ZTA5XkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 17,
+    "averageReviewRating": 4.9
+  },
+  {
+    "id": 11,
+    "title": "Fight Club",
+    "year": 1999,
+    "genre": [
+      "Drama",
+      "Thriller"
+    ],
+    "rating": 8.8,
+    "director": "David Fincher",
+    "runtime": 139,
+    "synopsis": "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
+    "cast": [
+      "Brad Pitt",
+      "Edward Norton",
+      "Helena Bonham Carter"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BOTgyODg1MDI3Nl5BMl5BanBnXkFtZWcwMjQ2NzEw._V1_SX300.jpg",
+    "reviewCount": 16,
+    "averageReviewRating": 4.6
+  },
+  {
+    "id": 12,
+    "title": "Titanic",
+    "year": 1997,
+    "genre": [
+      "Drama",
+      "Romance"
+    ],
+    "rating": 7.8,
+    "director": "James Cameron",
+    "runtime": 194,
+    "synopsis": "A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.",
+    "cast": [
+      "Leonardo DiCaprio",
+      "Kate Winslet"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2VlZi00MDc5LTg0OWItODEyOTQ3YzAxNmU4XkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 12,
+    "averageReviewRating": 4.2
+  },
+  {
+    "id": 13,
+    "title": "The Avengers",
+    "year": 2012,
+    "genre": [
+      "Action",
+      "Adventure",
+      "Sci-Fi"
+    ],
+    "rating": 8,
+    "director": "Joss Whedon",
+    "runtime": 143,
+    "synopsis": "Earth's mightiest heroes must come together and learn to fight as a team to prevent an alien invasion.",
+    "cast": [
+      "Robert Downey Jr.",
+      "Chris Evans",
+      "Mark Ruffalo"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNTk4ODQ1MzgxMV5BMl5BanBnXkFtZWcwMjAwNTA2Nw@@._V1_SX300.jpg",
+    "reviewCount": 10,
+    "averageReviewRating": 4.1
+  },
+  {
+    "id": 14,
+    "title": "Jurassic Park",
+    "year": 1993,
+    "genre": [
+      "Action",
+      "Adventure",
+      "Sci-Fi"
+    ],
+    "rating": 8.2,
+    "director": "Steven Spielberg",
+    "runtime": 127,
+    "synopsis": "A pragmatic paleontologist touring an almost complete theme park is tasked with protecting a couple of kids.",
+    "cast": [
+      "Sam Neill",
+      "Laura Dern",
+      "Jeff Goldblum"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMjM2MDgxNmYtOWMyNC00OTk3LTg3OTUtNDM0YjJjNTA3MzAxXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 14,
+    "averageReviewRating": 4.4
+  },
+  {
+    "id": 15,
+    "title": "The Lion King",
+    "year": 1994,
+    "genre": [
+      "Animation",
+      "Adventure",
+      "Family"
+    ],
+    "rating": 8.5,
+    "director": "Roger Allers, Rob Minkoff",
+    "runtime": 88,
+    "synopsis": "Lion prince Simba flees his kingdom after the death of his father, only to discover the truth about his past and his destiny.",
+    "cast": [
+      "Matthew Broderick",
+      "James Earl Jones",
+      "Jeremy Irons"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BYzc1MzI1OTUtZTc0Ny00YTQ0LWE0ZGItYzI5N2M5Y2JmZThkXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 9,
+    "averageReviewRating": 4.5
+  },
+  {
+    "id": 16,
+    "title": "The Silence of the Lambs",
+    "year": 1991,
+    "genre": [
+      "Crime",
+      "Drama",
+      "Thriller"
+    ],
+    "rating": 8.6,
+    "director": "Jonathan Demme",
+    "runtime": 118,
+    "synopsis": "A young FBI cadet must receive the help of an incarcerated cannibalistic serial killer to catch another serial killer.",
+    "cast": [
+      "Jodie Foster",
+      "Anthony Hopkins",
+      "Scott Glenn"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNjNhMjAxNmUtYzFlNC00YzEwLWE0YmUtNjlhYjM4ZDdmNzAxXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 13,
+    "averageReviewRating": 4.7
+  },
+  {
+    "id": 17,
+    "title": "Back to the Future",
+    "year": 1985,
+    "genre": [
+      "Adventure",
+      "Comedy",
+      "Sci-Fi"
+    ],
+    "rating": 8.5,
+    "director": "Robert Zemeckis",
+    "runtime": 116,
+    "synopsis": "A teenager is accidentally sent thirty years into the past in a time-traveling DeLorean invented by his friend.",
+    "cast": [
+      "Michael J. Fox",
+      "Christopher Lloyd",
+      "Lea Thompson"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZb52Yy00MzQyLWE1OTMtZmU0YWY3Y2QyMzIyXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 11,
+    "averageReviewRating": 4.6
+  },
+  {
+    "id": 18,
+    "title": "The Matrix Reloaded",
+    "year": 2003,
+    "genre": [
+      "Sci-Fi",
+      "Action"
+    ],
+    "rating": 7.2,
+    "director": "Wachowski Brothers",
+    "runtime": 138,
+    "synopsis": "Neo and his allies race against time before the machines discover the city of Zion and destroy it.",
+    "cast": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNTBmN2Y3N2EtYzkyOS00YWMzLTk3ZDgtOGE1ZTBiMzQ2NjZjXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 8,
+    "averageReviewRating": 3.8
+  },
+  {
+    "id": 19,
+    "title": "Saving Private Ryan",
+    "year": 1998,
+    "genre": [
+      "Drama",
+      "War"
+    ],
+    "rating": 8.6,
+    "director": "Steven Spielberg",
+    "runtime": 169,
+    "synopsis": "Following the Normandy Landings, a group of soldiers go behind enemy lines to retrieve a paratrooper.",
+    "cast": [
+      "Tom Hanks",
+      "Edward Burns",
+      "Tom Sizemore"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BZjhkMDk4YTYtY2lmZS00MzBkLThkZGItNTQwZWRjNGI5YTdjXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 15,
+    "averageReviewRating": 4.7
+  },
+  {
+    "id": 20,
+    "title": "The Pursuit of Happyness",
+    "year": 2006,
+    "genre": [
+      "Biography",
+      "Drama"
+    ],
+    "rating": 8,
+    "director": "Gabriele Muccino",
+    "runtime": 117,
+    "synopsis": "A struggling salesman takes custody of his son as he's poised to begin a life-changing professional endeavor.",
+    "cast": [
+      "Will Smith",
+      "Jaden Smith",
+      "Thandie Newton"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BMTQ5NjA3OTEwMF5BMl5BanBnXkFtZWcwNDI3OTY5Nw@@._V1_SX300.jpg",
+    "reviewCount": 10,
+    "averageReviewRating": 4.4
+  },
+  {
+    "title": "The Matrix",
+    "year": 1999,
+    "genre": [
+      "Sci-Fi",
+      "Action"
+    ],
+    "rating": 8.7,
+    "director": "Wachowski Brothers",
+    "runtime": 136,
+    "synopsis": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+    "cast": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVhLWI0MTEtMDM4YTI1N2E5ODcyXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 0,
+    "averageReviewRating": 0,
+    "id": 21
+  },
+  {
+    "id": 22,
+    "title": "The Matrix",
+    "year": 1999,
+    "genre": [
+      "Sci-Fi",
+      "Action"
+    ],
+    "rating": 8.7,
+    "director": "Wachowski Brothers",
+    "runtime": 136,
+    "synopsis": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+    "cast": [
+      "Keanu Reeves",
+      "Laurence Fishburne",
+      "Carrie-Anne Moss"
+    ],
+    "posterUrl": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVhLWI0MTEtMDM4YTI1N2E5ODcyXkEyXkFqcGc@._V1_SX300.jpg",
+    "reviewCount": 0,
+    "averageReviewRating": 0
+  }
+]
