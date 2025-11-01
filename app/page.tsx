@@ -1,65 +1,256 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { MovieCard } from "@/components/movie-card";
+import { MovieFilters, FilterState } from "@/components/movie-filters";
+import { Pagination } from "@/components/pagination";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { fetchMovies, getAllGenres, getYearRange } from "@/lib/client";
+import { Movie, MoviesResponse } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
+import { ArrowUpDown } from "lucide-react";
+
+type SortBy = "title" | "year" | "rating" | "reviewCount";
+type Order = "asc" | "desc";
 
 export default function Home() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [displayedMovies, setDisplayedMovies] = useState<MoviesResponse | null>(
+    null
+  );
+  const [loading, setLoading] = useState(true);
+  const [genres, setGenres] = useState<string[]>([]);
+  const [yearRange, setYearRange] = useState<[number, number]>([1900, 2025]);
+
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [genre, setGenre] = useState("all");
+  const [yearMin, setYearMin] = useState(yearRange[0]);
+  const [yearMax, setYearMax] = useState(yearRange[1]);
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState<SortBy>("title");
+  const [order, setOrder] = useState<Order>("asc");
+
+  const loadMovies = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await fetchMovies(
+        page,
+        limit,
+        genre === "all" ? undefined : genre,
+        yearMin,
+        yearMax,
+        search,
+        sortBy,
+        order
+      );
+      setDisplayedMovies(data);
+    } catch (error) {
+      console.error("Error loading movies:", error);
+      toast.error("Failed to load movies");
+    } finally {
+      setLoading(false);
+    }
+  }, [page, limit, genre, yearMin, yearMax, search, sortBy, order]);
+
+  const loadAllMovies = useCallback(async () => {
+    try {
+      const data = await fetchMovies(1, 1000);
+      setMovies(data.movies);
+      setGenres(getAllGenres(data.movies));
+      setYearRange(getYearRange(data.movies));
+    } catch (error) {
+      console.error("Error loading all movies:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadAllMovies();
+  }, [loadAllMovies]);
+
+  useEffect(() => {
+    loadMovies();
+  }, [loadMovies]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set("page", page.toString());
+    params.set("limit", limit.toString());
+    if (genre !== "all") params.set("genre", genre);
+    if (yearMin !== yearRange[0]) params.set("yearMin", yearMin.toString());
+    if (yearMax !== yearRange[1]) params.set("yearMax", yearMax.toString());
+    if (search) params.set("search", search);
+    if (sortBy !== "title") params.set("sortBy", sortBy);
+    if (order !== "asc") params.set("order", order);
+
+    router.push(`?${params.toString()}`);
+  }, [
+    page,
+    limit,
+    genre,
+    yearMin,
+    yearMax,
+    search,
+    sortBy,
+    order,
+    router,
+    yearRange,
+  ]);
+
+  useEffect(() => {
+    const paramsPage = searchParams.get("page");
+    const paramsLimit = searchParams.get("limit");
+    const paramsGenre = searchParams.get("genre");
+    const paramsYearMin = searchParams.get("yearMin");
+    const paramsYearMax = searchParams.get("yearMax");
+    const paramsSearch = searchParams.get("search");
+    const paramsSortBy = searchParams.get("sortBy");
+    const paramsOrder = searchParams.get("order");
+
+    if (paramsPage) setPage(parseInt(paramsPage, 10));
+    if (paramsLimit) setLimit(parseInt(paramsLimit, 10));
+    if (paramsGenre) setGenre(paramsGenre);
+    if (paramsYearMin) setYearMin(parseInt(paramsYearMin, 10));
+    if (paramsYearMax) setYearMax(parseInt(paramsYearMax, 10));
+    if (paramsSearch) setSearch(paramsSearch);
+    if (paramsSortBy) setSortBy(paramsSortBy as SortBy);
+    if (paramsOrder) setOrder(paramsOrder as Order);
+  }, [searchParams]);
+
+  const handleFilter = (filters: FilterState) => {
+    setGenre(filters.genre);
+    setYearMin(filters.yearMin);
+    setYearMax(filters.yearMax);
+    setSearch(filters.search);
+    setPage(1);
+  };
+
+  const handleSortChange = (field: SortBy) => {
+    if (sortBy === field) {
+      setOrder(order === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(field);
+      setOrder("asc");
+    }
+    setPage(1);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Movie Database
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-gray-600">
+            Explore our collection of {movies.length} movies
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
+          <div className="lg:col-span-1">
+            <MovieFilters
+              genres={genres}
+              yearRange={yearRange}
+              onFilter={handleFilter}
+              currentFilters={{ genre, yearMin, yearMax, search }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
+
+          <div className="lg:col-span-3 space-y-8">
+            <div className="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+              <div className="text-sm text-gray-600">
+                {displayedMovies
+                  ? `Showing ${
+                      (displayedMovies.page - 1) * displayedMovies.limit + 1
+                    }-${Math.min(
+                      displayedMovies.page * displayedMovies.limit,
+                      displayedMovies.total
+                    )} of ${displayedMovies.total} movies`
+                  : "Loading..."}
+              </div>
+
+              <div className="flex gap-2 flex-wrap">
+                <Select
+                  value={sortBy}
+                  onValueChange={(val) => handleSortChange(val as SortBy)}
+                >
+                  <SelectTrigger className="w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="title">Sort by Title</SelectItem>
+                    <SelectItem value="year">Sort by Year</SelectItem>
+                    <SelectItem value="rating">Sort by Rating</SelectItem>
+                    <SelectItem value="reviewCount">Sort by Reviews</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
+                  className="border-teal-600 text-teal-600 hover:bg-teal-50"
+                >
+                  <ArrowUpDown className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-lg shadow-md overflow-hidden"
+                  >
+                    <Skeleton className="w-full h-48" />
+                    <div className="p-4 space-y-3">
+                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-4 w-1/2" />
+                      <Skeleton className="h-3 w-full" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : displayedMovies && displayedMovies.movies.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {displayedMovies.movies.map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
+                  ))}
+                </div>
+
+                <Pagination
+                  currentPage={displayedMovies.page}
+                  totalPages={displayedMovies.totalPages}
+                  limit={displayedMovies.limit}
+                  onPageChange={setPage}
+                  onLimitChange={setLimit}
+                />
+              </>
+            ) : (
+              <div className="bg-white rounded-lg shadow-md p-12 text-center">
+                <p className="text-gray-600 text-lg">
+                  No movies found matching your filters.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

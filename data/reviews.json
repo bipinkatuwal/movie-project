@@ -142,5 +142,13 @@
     "rating": 4,
     "reviewText": "A thrilling adventure that holds up incredibly well. The dinosaur sequences are iconic and the story is engaging.",
     "createdAt": "2025-09-30T11:00:00Z"
+  },
+  {
+    "movieId": 9,
+    "userName": "Test user",
+    "rating": 5,
+    "reviewText": "test review",
+    "createdAt": "2025-10-31T18:43:26.930Z",
+    "id": 21
   }
 ]
