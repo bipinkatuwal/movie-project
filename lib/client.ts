@@ -33,6 +33,15 @@ export async function fetchMovie(id: number): Promise<Movie> {
   return response.json();
 }
 
+export async function logout() {
+  const response = await fetch(`/api/auth/logout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) throw new Error("Failed to logout user");
+  return response.json();
+}
+
 export async function createMovie(
   movie: Omit<Movie, "id" | "reviewCount" | "averageReviewRating">
 ): Promise<Movie> {
