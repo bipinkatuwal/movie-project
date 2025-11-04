@@ -38,10 +38,10 @@ export function Pagination({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+    <div className="bg-gray-900 rounded-lg p-6 space-y-4">
       <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">Items per page:</span>
+          <span className="text-sm text-gray-400">Items per page:</span>
           <Select
             value={limit.toString()}
             onValueChange={(val) => {
@@ -49,7 +49,7 @@ export function Pagination({
               onPageChange(1);
             }}
           >
-            <SelectTrigger className="w-20">
+            <SelectTrigger className="w-20 text-gray-300 border-gray-600">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -66,7 +66,7 @@ export function Pagination({
             size="sm"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="border-teal-600 text-teal-600 hover:bg-teal-50 disabled:opacity-50"
+            className="bg-white border-gray-800 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
@@ -91,7 +91,7 @@ export function Pagination({
                   onClick={() => onPageChange(pageNum)}
                   className={
                     currentPage === pageNum
-                      ? "bg-teal-600 hover:bg-teal-700"
+                      ? "bg-white text-gray-700 hover:bg-gray-200"
                       : "hover:bg-teal-50 text-gray-600"
                   }
                 >
@@ -106,7 +106,7 @@ export function Pagination({
             size="sm"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="border-teal-600 text-teal-600 hover:bg-teal-50 disabled:opacity-50"
+            className="bg-white border-gray-800 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
           >
             <ChevronRight className="w-4 h-4" />
           </Button>
@@ -122,14 +122,17 @@ export function Pagination({
           value={jumpPage}
           onChange={(e) => setJumpPage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleJump()}
-          className="w-32"
+          className="w-32 border-gray-600 text-gray-200"
         />
-        <Button onClick={handleJump} className="bg-teal-600 hover:bg-teal-700">
+        <Button
+          onClick={handleJump}
+          className="bg-white hover:bg-gray-200 text-black"
+        >
           Go
         </Button>
       </div>
 
-      <div className="text-sm text-gray-600 text-center">
+      <div className="text-sm text-gray-400 text-center">
         Page {currentPage} of {totalPages}
       </div>
     </div>

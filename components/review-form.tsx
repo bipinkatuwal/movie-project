@@ -64,7 +64,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
       <div>
         <Label
           htmlFor="userName"
-          className="text-sm font-medium text-gray-700 mb-1 block"
+          className="text-sm font-medium text-gray-300 mb-1 block"
         >
           Your Name
         </Label>
@@ -74,7 +74,9 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
           onChange={(e) => setUserName(e.target.value)}
           placeholder="Enter your name"
           disabled={isSubmitting}
-          className={errors.userName ? "border-red-500" : ""}
+          className={`${
+            errors.userName ? "border-red-500" : "border-gray-600"
+          } text-gray-200`}
         />
         {errors.userName && (
           <p className="text-sm text-red-600 mt-1">{errors.userName}</p>
@@ -82,10 +84,16 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
       </div>
 
       <div>
-        <Label className="text-sm font-medium text-gray-700 mb-2 block">
+        <Label className="text-sm font-medium text-gray-300 mb-2 block">
           Rating
         </Label>
-        <StarRating rating={rating} onRate={setRating} interactive size="lg" />
+        <StarRating
+          rating={rating}
+          onRate={setRating}
+          interactive
+          size="lg"
+          gap={1}
+        />
         {errors.rating && (
           <p className="text-sm text-red-600 mt-1">{errors.rating}</p>
         )}
@@ -94,7 +102,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
       <div>
         <Label
           htmlFor="reviewText"
-          className="text-sm font-medium text-gray-700 mb-1 block"
+          className="text-sm font-medium text-gray-300 mb-1 block"
         >
           Your Review
         </Label>
@@ -105,7 +113,9 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
           placeholder="Share your thoughts about this movie..."
           rows={4}
           disabled={isSubmitting}
-          className={errors.reviewText ? "border-red-500" : ""}
+          className={`${
+            errors.reviewText ? "border-red-500" : "border-gray-600"
+          } text-gray-200`}
         />
         {errors.reviewText && (
           <p className="text-sm text-red-600 mt-1">{errors.reviewText}</p>
@@ -115,7 +125,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
       <Button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-2"
+        className="w-full bg-white hover:bg-gray-200 text-black font-medium py-2"
       >
         {isSubmitting ? "Submitting..." : "Submit Review"}
       </Button>

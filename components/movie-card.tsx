@@ -13,24 +13,28 @@ interface MovieCardProps {
 export function MovieCard({ movie }: MovieCardProps) {
   return (
     <Link href={`/movies/${movie.id}`}>
-      <div className="group h-full bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden cursor-pointer">
-        <div className="relative w-full h-48 bg-gray-200 overflow-hidden">
+      <div className="h-full flex flex-col gap-1 overflow-hidden cursor-pointer">
+        <div className="relative w-full h-72 bg-gray-200 overflow-hidden rounded-xl">
           <Image
             src={movie.posterUrl}
             alt={movie.title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            className="object-cover hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <div className="p-4">
-          <h3 className="font-semibold text-gray-900 line-clamp-2 mb-2 group-hover:text-teal-600 transition-colors">
+        <div className="py-4">
+          <h3 className="font-semibold text-white line-clamp-2 mb-1 hover:text-gray-200 transition-colors">
             {movie.title}
           </h3>
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-gray-500">{movie.year}</span>
-            <div className="flex items-center gap-1">
-              <StarRating rating={Math.round(movie.rating / 2)} size="sm" />
+            <div className="flex items-center gap-5">
+              <StarRating
+                rating={Math.round(movie.rating / 2)}
+                size="sm"
+                gap={3}
+              />
               <span className="text-xs text-gray-600 font-medium">
                 {movie.rating.toFixed(1)}
               </span>
@@ -41,7 +45,7 @@ export function MovieCard({ movie }: MovieCardProps) {
               <Badge
                 key={g}
                 variant="secondary"
-                className="text-xs bg-teal-100 text-teal-700 hover:bg-teal-100"
+                className="text-[10px] bg-gray-700 text-gray-400 hover:bg-gray-600"
               >
                 {g}
               </Badge>

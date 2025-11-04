@@ -95,7 +95,7 @@ export function MovieFilters({
     localFilters.yearMax !== yearRange[1];
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+    <div className="bg-gray-900 rounded-lg shadow-md p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
         {hasActiveFilters && (
@@ -103,7 +103,7 @@ export function MovieFilters({
             variant="ghost"
             size="sm"
             onClick={handleClearFilters}
-            className="text-teal-600 hover:text-teal-700"
+            className="text-gray-300 hover:bg-gray-800 hover:text-gray-200"
           >
             <X className="w-4 h-4 mr-1" />
             Clear All
@@ -112,10 +112,10 @@ export function MovieFilters({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="search" className="text-sm font-medium text-gray-700">
+        <Label htmlFor="search" className="text-sm font-medium text-gray-400">
           Search
         </Label>
-        <div className="flex gap-2">
+        <div className="flex gap-2 ">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
@@ -123,13 +123,13 @@ export function MovieFilters({
               placeholder="Search movies, directors..."
               value={localFilters.search}
               onChange={handleSearchChange}
-              className="pl-10"
+              className="pl-10 border-gray-500 text-gray-300"
               onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
             />
           </div>
           <Button
             onClick={handleSearchSubmit}
-            className="bg-teal-600 hover:bg-teal-700"
+            className="bg-white text-gray-900 hover:bg-gray-200"
           >
             Search
           </Button>
@@ -137,14 +137,14 @@ export function MovieFilters({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="genre" className="text-sm font-medium text-gray-700">
+        <Label htmlFor="genre" className="text-sm font-medium text-gray-400">
           Genre
         </Label>
         <Select value={localFilters.genre} onValueChange={handleGenreChange}>
-          <SelectTrigger id="genre">
+          <SelectTrigger id="genre" className="border-gray-500 text-gray-400">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="">
             <SelectItem value="all">All Genres</SelectItem>
             {genres.map((genre) => (
               <SelectItem key={genre} value={genre}>
@@ -156,7 +156,7 @@ export function MovieFilters({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="year" className="text-sm font-medium text-gray-700">
+        <Label htmlFor="year" className="text-sm font-medium text-gray-400">
           Year Range: {years[0]} - {years[1]}
         </Label>
         <Slider

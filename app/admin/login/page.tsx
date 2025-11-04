@@ -41,19 +41,19 @@ export default function AdminLogin() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center px-4">
+    <main className="min-h-screen bg-black flex items-center justify-center px-4">
       <Card className="w-full max-w-md">
         <div className="p-8">
           <div className="flex justify-center mb-6">
-            <div className="bg-teal-600 rounded-lg p-3">
-              <Lock className="w-8 h-8 text-white" />
+            <div className="bg-gray-200 rounded-lg p-3">
+              <Lock className="w-8 h-8 text-black" />
             </div>
           </div>
 
-          <h1 className="text-2xl font-bold text-center text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-center text-gray-100 mb-2">
             Admin Login
           </h1>
-          <p className="text-center text-gray-600 mb-8">
+          <p className="text-center text-gray-300 mb-8">
             Enter your password to access the admin panel
           </p>
 
@@ -61,7 +61,7 @@ export default function AdminLogin() {
             <div>
               <Label
                 htmlFor="password"
-                className="text-sm font-medium text-gray-700 mb-2 block"
+                className="text-sm font-medium text-gray-300 mb-2 block"
               >
                 Password
               </Label>
@@ -72,7 +72,7 @@ export default function AdminLogin() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter admin password"
                 disabled={loading}
-                className={error ? "border-red-500" : ""}
+                className={`${error ? "border-red-500" : ""} text-gray-200`}
                 autoFocus
               />
               {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
@@ -81,14 +81,14 @@ export default function AdminLogin() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-600 hover:bg-teal-700 text-white font-medium py-2"
+              className="w-full bg-white hover:bg-gray-200 text-black font-medium py-2"
             >
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
 
           <div className="mt-6 pt-6 border-t">
-            <p className="text-xs text-gray-500 text-center">
+            <p className="text-xs text-gray-400 text-center">
               This is a secure area. Only authorized personnel should access
               this page.
             </p>

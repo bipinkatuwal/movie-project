@@ -72,7 +72,7 @@ export default function MovieDetail() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+      <main className="min-h-screen bg-black py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <Skeleton className="h-10 w-32 mb-4" />
@@ -86,7 +86,7 @@ export default function MovieDetail() {
 
   if (!movie) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+      <main className="min-h-screen bg-black py-8">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link href="/">
             <Button
@@ -106,22 +106,22 @@ export default function MovieDetail() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <main className="min-h-screen bg-black py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/">
           <Button
             variant="ghost"
-            className="mb-8 text-teal-600 hover:text-teal-700"
+            className="mb-8 text-gray-200 hover:bg-white hover:text-black transition-all duration-200"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Movies
           </Button>
         </Link>
 
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+        <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 sm:p-8">
             <div className="md:col-span-1">
-              <div className="relative w-full aspect-[2/3] bg-gray-200 rounded-lg overflow-hidden">
+              <div className="relative w-full aspect-2/3 bg-gray-200 rounded-lg overflow-hidden">
                 <Image
                   src={movie.posterUrl}
                   alt={movie.title}
@@ -135,17 +135,18 @@ export default function MovieDetail() {
 
             <div className="md:col-span-2 space-y-6">
               <div>
-                <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl sm:text-4xl font-bold text-gray-200 mb-2">
                   {movie.title}
                 </h1>
-                <div className="flex flex-wrap items-center gap-4 mb-4">
+                <div className="flex flex-wrap items-center gap-8 mb-4">
                   <span className="text-gray-500 text-lg">{movie.year}</span>
                   <div className="flex items-center gap-2">
                     <StarRating
                       rating={Math.round(movie.rating / 2)}
                       size="md"
+                      gap={1}
                     />
-                    <span className="text-2xl font-bold text-gray-900">
+                    <span className="text-2xl font-bold text-gray-200">
                       {movie.rating.toFixed(1)}
                     </span>
                   </div>
@@ -153,22 +154,22 @@ export default function MovieDetail() {
               </div>
 
               <div className="space-y-2">
-                <h3 className="font-semibold text-gray-900">Director</h3>
-                <p className="text-gray-600">{movie.director}</p>
+                <h3 className="font-semibold text-gray-200">Director</h3>
+                <p className="text-gray-500">{movie.director}</p>
               </div>
 
               <div className="space-y-2">
-                <h3 className="font-semibold text-gray-900">Runtime</h3>
-                <p className="text-gray-600">{movie.runtime} minutes</p>
+                <h3 className="font-semibold text-gray-200">Runtime</h3>
+                <p className="text-gray-500">{movie.runtime} minutes</p>
               </div>
 
               <div className="space-y-2">
-                <h3 className="font-semibold text-gray-900">Genre</h3>
+                <h3 className="font-semibold text-gray-600">Genre</h3>
                 <div className="flex flex-wrap gap-2">
                   {movie.genre.map((g) => (
                     <Badge
                       key={g}
-                      className="bg-teal-100 text-teal-700 hover:bg-teal-100"
+                      className="bg-gray-700 text-gray-400 hover:bg-gray-600"
                     >
                       {g}
                     </Badge>
@@ -177,12 +178,12 @@ export default function MovieDetail() {
               </div>
 
               <div className="space-y-2">
-                <h3 className="font-semibold text-gray-900">Cast</h3>
-                <p className="text-gray-600">{movie.cast.join(", ")}</p>
+                <h3 className="font-semibold text-gray-200">Cast</h3>
+                <p className="text-gray-500">{movie.cast.join(", ")}</p>
               </div>
 
-              <div className="bg-teal-50 rounded-lg p-4">
-                <p className="text-sm text-teal-900">
+              <div className="bg-gray-800 rounded-lg p-4">
+                <p className="text-sm text-gray-400">
                   <span className="font-semibold">{movie.reviewCount}</span>{" "}
                   {movie.reviewCount === 1 ? "review" : "reviews"} • Average
                   rating:{" "}
@@ -194,22 +195,22 @@ export default function MovieDetail() {
             </div>
           </div>
 
-          <div className="border-t px-6 sm:px-8 py-6 sm:py-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Synopsis</h2>
-            <p className="text-gray-600 leading-relaxed">{movie.synopsis}</p>
+          <div className="border-t border-gray-800 px-6 sm:px-8 py-6 sm:py-8">
+            <h2 className="text-2xl font-bold text-gray-200 mb-4">Synopsis</h2>
+            <p className="text-gray-500 leading-relaxed">{movie.synopsis}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             <Card className="p-6 sm:p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Reviews</h2>
+              <h2 className="text-2xl font-bold text-gray-200 mb-6">Reviews</h2>
 
               {reviews.length > 0 ? (
                 <ReviewList reviews={reviews} />
               ) : (
                 <div className="text-center py-8">
-                  <User className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+                  <User className="w-12 h-12 text-gray-200 mx-auto mb-2" />
                   <p className="text-gray-600">
                     No reviews yet. Be the first to review!
                   </p>
@@ -220,7 +221,7 @@ export default function MovieDetail() {
 
           <div className="lg:col-span-1">
             <Card className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+              <h3 className="text-xl font-bold text-gray-200">
                 Add Your Review
               </h3>
               <ReviewForm

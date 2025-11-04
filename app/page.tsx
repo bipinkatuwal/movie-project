@@ -148,16 +148,16 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <main className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
             Movie Database
           </h1>
           <p className="text-gray-600">
             Explore our collection of {movies.length} movies
           </p>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
           <div className="lg:col-span-1">
@@ -170,8 +170,8 @@ export default function Home() {
           </div>
 
           <div className="lg:col-span-3 space-y-8">
-            <div className="bg-white rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-              <div className="text-sm text-gray-600">
+            <div className="bg-gray-900 rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+              <div className="text-sm text-gray-400">
                 {displayedMovies
                   ? `Showing ${
                       (displayedMovies.page - 1) * displayedMovies.limit + 1
@@ -187,7 +187,7 @@ export default function Home() {
                   value={sortBy}
                   onValueChange={(val) => handleSortChange(val as SortBy)}
                 >
-                  <SelectTrigger className="w-40">
+                  <SelectTrigger className="w-40 text-white border-gray-700">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -202,7 +202,7 @@ export default function Home() {
                   variant="outline"
                   size="sm"
                   onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
-                  className="border-teal-600 text-teal-600 hover:bg-teal-50"
+                  className="border-gray-600 text-gray-600 hover:bg-teal-50"
                 >
                   <ArrowUpDown className="w-4 h-4" />
                 </Button>
@@ -210,13 +210,13 @@ export default function Home() {
             </div>
 
             {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {[...Array(6)].map((_, i) => (
                   <div
                     key={i}
-                    className="bg-white rounded-lg shadow-md overflow-hidden"
+                    className="bg-gray-900 rounded-lg shadow-md overflow-hidden"
                   >
-                    <Skeleton className="w-full h-48" />
+                    <Skeleton className="w-full h-72" />
                     <div className="p-4 space-y-3">
                       <Skeleton className="h-4 w-3/4" />
                       <Skeleton className="h-4 w-1/2" />
@@ -227,7 +227,7 @@ export default function Home() {
               </div>
             ) : displayedMovies && displayedMovies.movies.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {displayedMovies.movies.map((movie) => (
                     <MovieCard key={movie.id} movie={movie} />
                   ))}
@@ -242,8 +242,8 @@ export default function Home() {
                 />
               </>
             ) : (
-              <div className="bg-white rounded-lg shadow-md p-12 text-center">
-                <p className="text-gray-600 text-lg">
+              <div className="bg-black rounded-lg shadow-md p-12 text-center">
+                <p className="text-gray-400 text-lg">
                   No movies found matching your filters.
                 </p>
               </div>

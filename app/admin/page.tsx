@@ -28,6 +28,7 @@ export default function AdminPanel() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [exportMovie, setExportMovie] = useState(false);
 
   useEffect(() => {
     loadMovies();
@@ -77,18 +78,18 @@ export default function AdminPanel() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <main className="min-h-scree bg-black py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-100">
               Admin Panel
             </h1>
-            <p className="text-gray-600 mt-1">Manage your movie database</p>
+            <p className="text-gray-300 mt-1">Manage your movie database</p>
           </div>
 
           <div className="flex gap-2 mt-4 sm:mt-0">
-            <Button asChild className="bg-teal-600 hover:bg-teal-700">
+            <Button asChild className="bg-white text-black hover:bg-gray-100">
               <Link href="/admin/movies/new">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Movie
@@ -97,8 +98,8 @@ export default function AdminPanel() {
 
             <Button
               variant="outline"
-              onClick={handleExport}
-              className="border-teal-600 text-teal-600 hover:bg-teal-50"
+              onClick={() => setExportMovie(true)}
+              className="bbg-white text-black hover:bg-gray-100"
             >
               <Download className="w-4 h-4 mr-2" />
               Export CSV
@@ -107,7 +108,7 @@ export default function AdminPanel() {
             <Button
               variant="outline"
               onClick={handleLogout}
-              className="border-red-600 text-red-600 hover:bg-red-50"
+              className="bg-white text-black hover:bg-gray-100"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -117,7 +118,7 @@ export default function AdminPanel() {
 
         {loading ? (
           <div className="text-center py-12">
-            <p className="text-gray-600">Loading movies...</p>
+            <p className="text-gray-300">Loading movies...</p>
           </div>
         ) : movies.length > 0 ? (
           <div className="grid gap-4">
@@ -125,10 +126,10 @@ export default function AdminPanel() {
               <Card key={movie.id} className="p-4">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-lg text-gray-900">
+                    <h3 className="font-semibold text-lg text-gray-200">
                       {movie.title}
                     </h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-300">
                       {movie.year} • {movie.director} • {movie.genre.join(", ")}
                     </p>
                   </div>
@@ -138,7 +139,8 @@ export default function AdminPanel() {
                       asChild
                       variant="outline"
                       size="sm"
-                      className="border-teal-600 text-teal-600 hover:bg-teal-50"
+                      className="bg-white text-green-500
+                       hover:text-green-600"
                     >
                       <Link href={`/admin/movies/${movie.id}`}>
                         <Edit2 className="w-4 h-4" />
@@ -149,7 +151,7 @@ export default function AdminPanel() {
                       variant="outline"
                       size="sm"
                       onClick={() => setDeleteId(movie.id)}
-                      className="border-red-600 text-red-600 hover:bg-red-50"
+                      className="bg-white text-red-500 hover:text-red-600"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -161,7 +163,7 @@ export default function AdminPanel() {
         ) : (
           <Card className="p-12 text-center">
             <p className="text-gray-600 text-lg mb-4">No movies found</p>
-            <Button asChild className="bg-teal-600 hover:bg-teal-700">
+            <Button asChild className="bg-white text-black hover:bg-gray-200">
               <Link href="/admin/movies/new">
                 <Plus className="w-4 h-4 mr-2" />
                 Add First Movie
@@ -187,6 +189,27 @@ export default function AdminPanel() {
                 className="bg-red-600 hover:bg-red-700"
               >
                 Delete
+              </AlertDialogAction>
+            </div>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        <AlertDialog
+          open={exportMovie}
+          onOpenChange={(open) => !open && setExportMovie(false)}
+        >
+          <AlertDialogContent>
+            <AlertDialogTitle>Export CSV?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to download these movie list?
+            </AlertDialogDescription>
+            <div className="flex gap-2 justify-end">
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleExport}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Export
               </AlertDialogAction>
             </div>
           </AlertDialogContent>
