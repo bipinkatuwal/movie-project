@@ -14,7 +14,7 @@ export function MovieCard({ movie }: MovieCardProps) {
   return (
     <Link href={`/movies/${movie.id}`}>
       <div className="h-full flex flex-col gap-1 overflow-hidden cursor-pointer">
-        <div className="relative w-full h-72 bg-gray-200 overflow-hidden rounded-xl">
+        <div className="relative w-full h-72 bg-muted overflow-hidden rounded-xl">
           <Image
             src={movie.posterUrl}
             alt={movie.title}
@@ -24,18 +24,18 @@ export function MovieCard({ movie }: MovieCardProps) {
           />
         </div>
         <div className="py-4">
-          <h3 className="font-semibold text-white line-clamp-2 mb-1 hover:text-gray-200 transition-colors">
+          <h3 className="font-semibold text-foreground line-clamp-2 mb-1 hover:text-foreground/80 transition-colors">
             {movie.title}
           </h3>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-500">{movie.year}</span>
+            <span className="text-sm text-muted-foreground">{movie.year}</span>
             <div className="flex items-center gap-5">
               <StarRating
                 rating={Math.round(movie.rating / 2)}
                 size="sm"
                 gap={3}
               />
-              <span className="text-xs text-gray-600 font-medium">
+              <span className="text-xs text-muted-foreground font-medium">
                 {movie.rating.toFixed(1)}
               </span>
             </div>
@@ -45,13 +45,13 @@ export function MovieCard({ movie }: MovieCardProps) {
               <Badge
                 key={g}
                 variant="secondary"
-                className="text-[10px] bg-gray-700 text-gray-400 hover:bg-gray-600"
+                className="text-[10px] bg-secondary text-secondary-foreground hover:bg-secondary/80"
               >
                 {g}
               </Badge>
             ))}
           </div>
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
             <span>{movie.runtime} min</span>
             <span>{movie.reviewCount} reviews</span>
           </div>

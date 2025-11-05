@@ -9,8 +9,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import { useState } from "react";
+import { Card, CardContent } from "./ui/card";
+import { Field, FieldLabel } from "./ui/field";
 
 interface PaginationProps {
   currentPage: number;
@@ -20,7 +30,7 @@ interface PaginationProps {
   onLimitChange: (limit: number) => void;
 }
 
-export function Pagination({
+export function PaginationComponent({
   currentPage,
   totalPages,
   limit,
@@ -37,11 +47,50 @@ export function Pagination({
     }
   };
 
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pages: (number | "ellipsis")[] = [];
+
+    if (totalPages <= 7) {
+      // Show all pages if 7 or fewer
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Always show first page
+      pages.push(1);
+
+      if (currentPage > 3) {
+        pages.push("ellipsis");
+      }
+
+      // Show pages around current page
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (currentPage < totalPages - 2) {
+        pages.push("ellipsis");
+      }
+
+      // Always show last page
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
+
   return (
-    <div className="bg-gray-900 rounded-lg p-6 space-y-4">
-      <div className="flex flex-col sm:flex-row gap-4 items-center sm:justify-between">
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-400">Items per page:</span>
+    <Card>
+      <CardContent className="grid md:grid-cols-3 grid-cols-1 gap-2 md:gap-0">
+        <Field
+          orientation="horizontal"
+          className="justify-center md:justify-start"
+        >
+          <p className="text-sm">Items per page:</p>
           <Select
             value={limit.toString()}
             onValueChange={(val) => {
@@ -49,7 +98,7 @@ export function Pagination({
               onPageChange(1);
             }}
           >
-            <SelectTrigger className="w-20 text-gray-300 border-gray-600">
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -58,83 +107,57 @@ export function Pagination({
               <SelectItem value="50">50</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </Field>
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="bg-white border-gray-800 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </Button>
+        <Field orientation="horizontal" className="justify-center">
+          <p className="text-sm text-center">
+            Page {currentPage} of {totalPages}
+          </p>
+        </Field>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => onPageChange(currentPage - 1)}
+                aria-disabled={currentPage === 1}
+                className={
+                  currentPage === 1
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
 
-          <div className="flex items-center gap-2 px-2">
-            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-              let pageNum: number;
-              if (totalPages <= 5) {
-                pageNum = i + 1;
-              } else if (currentPage <= 3) {
-                pageNum = i + 1;
-              } else if (currentPage >= totalPages - 2) {
-                pageNum = totalPages - 4 + i;
-              } else {
-                pageNum = currentPage - 2 + i;
-              }
-              return (
-                <Button
-                  key={pageNum}
-                  variant={currentPage === pageNum ? "default" : "ghost"}
-                  size="sm"
-                  onClick={() => onPageChange(pageNum)}
-                  className={
-                    currentPage === pageNum
-                      ? "bg-white text-gray-700 hover:bg-gray-200"
-                      : "hover:bg-teal-50 text-gray-600"
-                  }
-                >
-                  {pageNum}
-                </Button>
-              );
-            })}
-          </div>
+            {getPageNumbers().map((page, index) => (
+              <PaginationItem key={index}>
+                {page === "ellipsis" ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    onClick={() => onPageChange(page)}
+                    isActive={currentPage === page}
+                    className="cursor-pointer"
+                  >
+                    {page}
+                  </PaginationLink>
+                )}
+              </PaginationItem>
+            ))}
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="bg-white border-gray-800 text-gray-700 hover:bg-gray-200 disabled:opacity-50"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex gap-2 items-center justify-center md:justify-start">
-        <Input
-          type="number"
-          min="1"
-          max={totalPages}
-          placeholder="Jump to page"
-          value={jumpPage}
-          onChange={(e) => setJumpPage(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleJump()}
-          className="w-32 border-gray-600 text-gray-200"
-        />
-        <Button
-          onClick={handleJump}
-          className="bg-white hover:bg-gray-200 text-black"
-        >
-          Go
-        </Button>
-      </div>
-
-      <div className="text-sm text-gray-400 text-center">
-        Page {currentPage} of {totalPages}
-      </div>
-    </div>
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => onPageChange(currentPage + 1)}
+                aria-disabled={currentPage === totalPages}
+                className={
+                  currentPage === totalPages
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </CardContent>
+    </Card>
   );
 }

@@ -23,7 +23,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import Image from "next/image";
-import MovieListSkeleton from "@/components/movies-skeleton";
+import {
+  MovieCardSkeleton,
+  MovieGridSkeleton,
+} from "@/components/movies-skeleton";
 
 export default function AdminPanel() {
   const router = useRouter();
@@ -80,38 +83,30 @@ export default function AdminPanel() {
   };
 
   return (
-    <main className="min-h-scree bg-black py-8">
+    <main className="min-h-screen py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-100">
-              Admin Panel
-            </h1>
-            <p className="text-gray-300 mt-1">Manage your movie database</p>
+            <h1 className="text-3xl sm:text-4xl font-bold">Admin Panel</h1>
+            <p className="text-muted-foreground mt-1">
+              Manage your movie database
+            </p>
           </div>
 
           <div className="flex gap-2 mt-4 sm:mt-0">
-            <Button asChild className="bg-white text-black hover:bg-gray-100">
+            <Button asChild>
               <Link href="/admin/movies/new">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Movie
               </Link>
             </Button>
 
-            <Button
-              variant="outline"
-              onClick={() => setExportMovie(true)}
-              className="bbg-white text-green-500 hover:text-green-600"
-            >
+            <Button variant="outline" onClick={() => setExportMovie(true)}>
               <Download className="w-4 h-4 mr-2" />
               Export CSV
             </Button>
 
-            <Button
-              variant="outline"
-              onClick={handleLogout}
-              className="bg-white text-red-500 hover:text-red-600"
-            >
+            <Button variant="destructive" onClick={handleLogout}>
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </Button>
@@ -119,55 +114,53 @@ export default function AdminPanel() {
         </div>
 
         {loading ? (
-          <MovieListSkeleton />
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <MovieGridSkeleton />
+          </div>
         ) : movies.length > 0 ? (
-          <div className="grid gap-4">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {movies.map((movie) => (
               <Card key={movie.id} className="p-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex md:flex-col gap-4">
-                    <div className="relative w-full h-20 max-w-20 bg-gray-200 overflow-hidden rounded-xl">
-                      <Image
-                        src={movie.posterUrl}
-                        alt={movie.title}
-                        fill
-                        className="object-cover hover:scale-105 transition-transform duration-300"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg text-gray-200">
-                        {movie.title}
-                      </h3>
-                      <p className="text-sm text-gray-300">
-                        {movie.year} • {movie.director} •{" "}
-                        {movie.genre.join(", ")}
-                      </p>
-                    </div>
-                  </div>
+                <figure className="relative w-full h-48 overflow-hidden rounded-lg">
+                  <Image
+                    src={movie.posterUrl}
+                    alt={movie.title}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </figure>
 
-                  <div className="flex gap-2 self-end">
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className="bg-white text-green-500
+                <div className="flex-1">
+                  <h3 className="font-semibold text-lg text-foreground">
+                    {movie.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {movie.year} • {movie.director} • {movie.genre.join(", ")}
+                  </p>
+                </div>
+
+                <div className="flex gap-2 self-end">
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="bg-white text-green-500
                        hover:text-green-600"
-                    >
-                      <Link href={`/admin/movies/${movie.id}`}>
-                        <Edit2 className="w-4 h-4" />
-                      </Link>
-                    </Button>
+                  >
+                    <Link href={`/admin/movies/${movie.id}`}>
+                      <Edit2 className="w-4 h-4" />
+                    </Link>
+                  </Button>
 
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setDeleteId(movie.id)}
-                      className="bg-white text-red-500 hover:text-red-600"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setDeleteId(movie.id)}
+                    className="bg-white text-red-500 hover:text-red-600"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
                 </div>
               </Card>
             ))}

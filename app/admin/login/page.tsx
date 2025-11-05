@@ -60,10 +60,10 @@ export default function AdminLogin() {
             </div>
           </div>
 
-          <h1 className="text-2xl font-bold text-center text-gray-100 mb-2">
+          <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200 mb-2">
             Admin Login
           </h1>
-          <p className="text-center text-gray-300 mb-8">
+          <p className="text-center text-gray-500 dark:text-gray-300 mb-8">
             Enter your password to access the admin panel
           </p>
 
@@ -71,7 +71,7 @@ export default function AdminLogin() {
             <div>
               <Label
                 htmlFor="password"
-                className="text-sm font-medium text-gray-300 mb-2 block"
+                className="text-sm font-medium text-gray-500 dark:text-gray-300 mb-2 block"
               >
                 Password
               </Label>
@@ -82,17 +82,15 @@ export default function AdminLogin() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter admin password"
                 disabled={loading}
-                className={`${error ? "border-red-500" : ""} text-gray-200`}
+                className={`${
+                  error ? "border-red-500" : ""
+                } text-gray-800 dark:text-gray-200`}
                 autoFocus
               />
               {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
             </div>
 
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-white hover:bg-gray-200 text-black font-medium py-2"
-            >
+            <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>

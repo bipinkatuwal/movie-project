@@ -14,12 +14,14 @@ export function ReviewList({ reviews }: ReviewListProps) {
       {reviews.map((review) => (
         <div
           key={review.id}
-          className="border-b border-gray-200 pb-6 last:border-b-0"
+          className="border-b border-gray-200 dark:border-gray-700 pb-6 last:border-b-0"
         >
           <div className="flex items-start justify-between mb-2">
             <div>
-              <h4 className="font-semibold text-gray-300">{review.userName}</h4>
-              <p className="text-sm text-gray-500">
+              <h4 className="font-semibold text-foreground">
+                {review.userName}
+              </h4>
+              <p className="text-sm text-muted-foreground">
                 {formatDistanceToNow(new Date(review.createdAt), {
                   addSuffix: true,
                 })}
@@ -27,7 +29,7 @@ export function ReviewList({ reviews }: ReviewListProps) {
             </div>
             <StarRating rating={review.rating} size="sm" />
           </div>
-          <p className="text-gray-500 mt-3">{review.reviewText}</p>
+          <p className="text-muted-foreground mt-3">{review.reviewText}</p>
         </div>
       ))}
     </div>

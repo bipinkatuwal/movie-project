@@ -1,28 +1,37 @@
-import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from "@/components/ui/card";
 
-export default function MovieListSkeleton() {
+export function MovieCardSkeleton() {
   return (
-    <div className="grid gap-4">
-      {[...Array(6)].map((_, i) => (
-        <Card key={i} className="p-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex md:flex-col gap-4">
-              <Skeleton className="w-20 h-20 rounded-xl" />
+    <Card className="p-4">
+      {/* Poster skeleton */}
+      <div className="relative w-full h-48 overflow-hidden rounded-lg">
+        <Skeleton className="w-full h-full" />
+      </div>
 
-              <div className="flex-1 space-y-2">
-                <Skeleton className="h-5 w-40" />
-                <Skeleton className="h-4 w-60" />
-              </div>
-            </div>
+      {/* Content skeleton */}
+      <div className="flex-1 mt-4">
+        {/* Title */}
+        <Skeleton className="h-6 w-3/4 mb-2" />
+        {/* Metadata */}
+        <Skeleton className="h-4 w-full" />
+      </div>
 
-            <div className="flex gap-2 self-end">
-              <Skeleton className="h-8 w-8 rounded-md" />
-              <Skeleton className="h-8 w-8 rounded-md" />
-            </div>
-          </div>
-        </Card>
+      {/* Buttons skeleton */}
+      <div className="flex gap-2 self-end mt-4">
+        <Skeleton className="h-9 w-9" />
+        <Skeleton className="h-9 w-9" />
+      </div>
+    </Card>
+  );
+}
+
+export function MovieGridSkeleton({ count = 8 }: { count?: number }) {
+  return (
+    <>
+      {Array.from({ length: count }).map((_, i) => (
+        <MovieCardSkeleton key={i} />
       ))}
-    </div>
+    </>
   );
 }

@@ -40,7 +40,7 @@ export default function EditMovie() {
   }, [movieId, router]);
 
   const handleSubmit = async (
-    data: Omit<Movie, "id" | "reviewCount" | "averageReviewRating">
+    data: Omit<Movie, "id" | "reviewCount" | "averageReviewRating">,
   ) => {
     try {
       setIsSubmitting(true);
@@ -59,10 +59,7 @@ export default function EditMovie() {
     <main className="min-h-screen bg-black py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/admin">
-          <Button
-            variant="ghost"
-            className="mb-6 text-gray-200 hover:bg-white hover:text-black transition-all duration-200"
-          >
+          <Button variant="ghost" className="mb-6 ">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Admin
           </Button>
