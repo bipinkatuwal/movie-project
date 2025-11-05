@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Settings } from "lucide-react";
 
 export function NavigationBar() {
   const pathname = usePathname();
@@ -26,23 +25,11 @@ export function NavigationBar() {
           </Link>
 
           <div className="flex gap-4">
-            {/* <Link
-              href="/"
-              className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                !isAdminPage
-                  ? "bg-teal-100 text-teal-700"
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              }`}
-            >
-              Dashboard
-            </Link> */}
-
             <Link
               href="/admin"
               className={`px-4 py-2 rounded text-sm font-medium transition-colors flex items-center gap-1 text-black bg-white hover:text-gray-700
               `}
             >
-              {/* <Settings className="w-4 h-4" /> */}
               Admin
             </Link>
           </div>
