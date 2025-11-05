@@ -10,7 +10,7 @@ import { Movie } from "@/lib/types";
 interface MovieFormProps {
   initialData?: Movie;
   onSubmit: (
-    data: Omit<Movie, "id" | "reviewCount" | "averageReviewRating">,
+    data: Omit<Movie, "id" | "reviewCount" | "averageReviewRating">
   ) => Promise<void>;
   isSubmitting: boolean;
 }
@@ -172,7 +172,9 @@ export function MovieForm({
             }
             placeholder="Movie title"
             disabled={isSubmitting}
-            className={`${errors.title ? "border-destructive" : "border-input"} text-foreground`}
+            className={`${
+              errors.title ? "border-destructive" : "border-input"
+            } text-foreground`}
           />
           {errors.title && (
             <p className="text-sm text-destructive mt-1">{errors.title}</p>
@@ -195,7 +197,9 @@ export function MovieForm({
             }
             placeholder="1999"
             disabled={isSubmitting}
-            className={`${errors.year ? "border-destructive" : "border-input"} text-foreground`}
+            className={`${
+              errors.year ? "border-destructive" : "border-input"
+            } text-foreground`}
           />
           {errors.year && (
             <p className="text-sm text-destructive mt-1">{errors.year}</p>
@@ -271,7 +275,9 @@ export function MovieForm({
             }
             placeholder="8.5"
             disabled={isSubmitting}
-            className={`${errors.rating ? "border-destructive" : "border-input"} text-foreground`}
+            className={`${
+              errors.rating ? "border-destructive" : "border-input"
+            } text-foreground`}
           />
           {errors.rating && (
             <p className="text-sm text-destructive mt-1">{errors.rating}</p>
@@ -319,7 +325,9 @@ export function MovieForm({
           placeholder="Movie synopsis"
           rows={4}
           disabled={isSubmitting}
-          className={`${errors.synopsis ? "border-destructive" : "border-input"} text-foreground`}
+          className={`${
+            errors.synopsis ? "border-destructive" : "border-input"
+          } text-foreground`}
         />
         {errors.synopsis && (
           <p className="text-sm text-destructive mt-1">{errors.synopsis}</p>
@@ -337,12 +345,15 @@ export function MovieForm({
             className="flex-1 px-3 py-2 border border-input rounded-md text-sm focus:outline-none text-foreground"
             disabled={isSubmitting}
           >
-            <option className="text-popover-foreground" value="">
+            <option
+              className="text-popover-foreground dark:text-secondary"
+              value=""
+            >
               Select genre
             </option>
             {ALL_GENRES.map((genre) => (
               <option
-                className="text-popover-foreground"
+                className="text-popover-foreground dark:text-secondary"
                 key={genre}
                 value={genre}
               >
@@ -438,8 +449,8 @@ export function MovieForm({
           {isSubmitting
             ? "Saving..."
             : initialData
-              ? "Update Movie"
-              : "Add Movie"}
+            ? "Update Movie"
+            : "Add Movie"}
         </Button>
       </div>
     </form>
