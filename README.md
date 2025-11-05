@@ -1,36 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spectaculum - Movie Project
 
-## Getting Started
+A modern movie management dashboard built with Next.js, TypeScript, and Tailwind CSS. Features include movie listing, reviews, admin panel, and CSV export capabilities.
 
-First, run the development server:
+## Features
+
+- Movie browsing with filtering and sorting
+- Star rating system
+- User reviews
+- Search functionality
+- Genre-based filtering
+- Admin dashboard
+- CSV export
+- Responsive design
+
+## Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: Custom components with [Shadcn UI](https://ui.shadcn.com/)
+- **Icons**: [Lucide Icons](https://lucide.dev/)
+- **Data Storage**: Local JSON files
+- **Authentication**: Basic password protection for admin
+
+## Prerequisites
+
+- Node.js 18.17 or later
+- npm or yarn package manager
+
+## Local Development Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/bipinkatuwal/movie-project.git
+cd movie-project
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables:
+
+```bash
+# Create .env.local file
+cp .env.example .env.local
+
+# Add required variables
+ADMIN_PASSWORD=your_admin_password
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+movie-project/
+├── app/                    # Next.js app router pages
+│   ├── admin/             # Admin panel routes
+│   ├── api/               # API routes
+│   └── movies/            # Movie details pages
+├── components/            # React components
+│   ├── ui/               # Reusable UI components
+│   └── ...               # Feature-specific components
+├── lib/                  # Utilities and helpers
+├── data/                 # JSON data storage
+└── public/              # Static assets
+```
 
-## Learn More
+## Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` - Start development server
+- `npm run build` - Build production bundle
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Movies
 
-## Deploy on Vercel
+- `GET /api/movies` - List movies with pagination and filters
+- `POST /api/movies` - Create new movie (admin only)
+- `GET /api/movies/[id]` - Get movie details
+- `PUT /api/movies/[id]` - Update movie (admin only)
+- `DELETE /api/movies/[id]` - Delete movie (admin only)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Reviews
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `GET /api/reviews` - List reviews for a movie
+- `POST /api/reviews` - Create new review
+
+### Admin
+
+- `POST /api/auth/login` - Admin login
+- `POST /api/auth/logout` - Admin logout
+
+## Environment Variables
+
+```env
+# Required
+ADMIN_PASSWORD=your_admin_password  # Password for admin access
+
+# Optional
+NEXT_PUBLIC_API_URL=http://localhost:3000  # API base URL
+```
+
+## Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Fork this repository
+2. Create a new project on [Vercel](https://vercel.com)
+3. Import your forked repository
+4. Add environment variables in Vercel project settings
+5. Deploy
+
+### Manual Deployment
+
+1. Build the application:
+
+```bash
+npm run build
+```
+
+2. Start the production server:
+
+```bash
+npm run start
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Make changes and commit: `git commit -m 'Add feature'`
+4. Push to branch: `git push origin feature/your-feature`
+5. Submit a pull request
