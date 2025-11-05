@@ -20,7 +20,7 @@ export function NavigationBar() {
         <div className="flex justify-between items-center h-16">
           <Link
             href="/"
-            className="flex items-center gap-2 text-3xl font-bold text-white font-heading"
+            className="flex items-center gap-2 text-2xl uppercase font-bold text-white font-heading"
           >
             Spectaculum
           </Link>

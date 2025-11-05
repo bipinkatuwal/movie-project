@@ -32,12 +32,12 @@ export default function NewMovie() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8">
+    <main className="min-h-screen bg-black py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link href="/admin">
           <Button
             variant="ghost"
-            className="mb-6 text-teal-600 hover:text-teal-700"
+            className="mb-6 text-gray-200 hover:bg-white hover:text-black transition-all duration-200"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Admin
@@ -45,7 +45,7 @@ export default function NewMovie() {
         </Link>
 
         <Card className="p-6 sm:p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl font-bold text-gray-200 mb-6">
             Add New Movie
           </h1>
           <MovieForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />

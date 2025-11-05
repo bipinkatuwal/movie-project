@@ -150,15 +150,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        {/* <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Movie Database
-          </h1>
-          <p className="text-gray-600">
-            Explore our collection of {movies.length} movies
-          </p>
-        </div> */}
-
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
           <div className="lg:col-span-1">
             <MovieFilters

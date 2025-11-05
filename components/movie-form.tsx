@@ -160,7 +160,7 @@ export function MovieForm({
         <div>
           <Label
             htmlFor="title"
-            className="text-sm font-medium text-gray-700 mb-1 block"
+            className="text-sm font-medium text-gray-300 mb-1 block"
           >
             Title
           </Label>
@@ -172,7 +172,7 @@ export function MovieForm({
             }
             placeholder="Movie title"
             disabled={isSubmitting}
-            className={errors.title ? "border-red-500" : ""}
+            className={`${errors.title ? "border-red-500" : ""} text-gray-300`}
           />
           {errors.title && (
             <p className="text-sm text-red-600 mt-1">{errors.title}</p>
@@ -182,7 +182,7 @@ export function MovieForm({
         <div>
           <Label
             htmlFor="year"
-            className="text-sm font-medium text-gray-700 mb-1 block"
+            className="text-sm font-medium text-gray-300 mb-1 block"
           >
             Year
           </Label>
@@ -195,7 +195,7 @@ export function MovieForm({
             }
             placeholder="1999"
             disabled={isSubmitting}
-            className={errors.year ? "border-red-500" : ""}
+            className={`${errors.year ? "border-red-500" : ""} text-gray-300`}
           />
           {errors.year && (
             <p className="text-sm text-red-600 mt-1">{errors.year}</p>
@@ -205,7 +205,7 @@ export function MovieForm({
         <div>
           <Label
             htmlFor="director"
-            className="text-sm font-medium text-gray-700 mb-1 block"
+            className="text-sm font-medium text-gray-300 mb-1 block"
           >
             Director
           </Label>
@@ -217,7 +217,9 @@ export function MovieForm({
             }
             placeholder="Director name"
             disabled={isSubmitting}
-            className={errors.director ? "border-red-500" : ""}
+            className={`${
+              errors.director ? "border-red-500" : ""
+            } text-gray-300`}
           />
           {errors.director && (
             <p className="text-sm text-red-600 mt-1">{errors.director}</p>
@@ -227,7 +229,7 @@ export function MovieForm({
         <div>
           <Label
             htmlFor="runtime"
-            className="text-sm font-medium text-gray-700 mb-1 block"
+            className="text-sm font-medium text-gray-300 mb-1 block"
           >
             Runtime (minutes)
           </Label>
@@ -243,7 +245,9 @@ export function MovieForm({
             }
             placeholder="120"
             disabled={isSubmitting}
-            className={errors.runtime ? "border-red-500" : ""}
+            className={`${
+              errors.runtime ? "border-red-500" : ""
+            } text-gray-300`}
           />
           {errors.runtime && (
             <p className="text-sm text-red-600 mt-1">{errors.runtime}</p>
@@ -253,7 +257,7 @@ export function MovieForm({
         <div>
           <Label
             htmlFor="rating"
-            className="text-sm font-medium text-gray-700 mb-1 block"
+            className="text-sm font-medium text-gray-300 mb-1 block"
           >
             Rating (0-10)
           </Label>
@@ -267,7 +271,7 @@ export function MovieForm({
             }
             placeholder="8.5"
             disabled={isSubmitting}
-            className={errors.rating ? "border-red-500" : ""}
+            className={`${errors.rating ? "border-red-500" : ""} text-gray-300`}
           />
           {errors.rating && (
             <p className="text-sm text-red-600 mt-1">{errors.rating}</p>
@@ -277,7 +281,7 @@ export function MovieForm({
         <div>
           <Label
             htmlFor="posterUrl"
-            className="text-sm font-medium text-gray-700 mb-1 block"
+            className="text-sm font-medium text-gray-300 mb-1 block"
           >
             Poster URL
           </Label>
@@ -289,7 +293,9 @@ export function MovieForm({
             }
             placeholder="https://..."
             disabled={isSubmitting}
-            className={errors.posterUrl ? "border-red-500" : ""}
+            className={`${
+              errors.posterUrl ? "border-red-500" : ""
+            } text-gray-300`}
           />
           {errors.posterUrl && (
             <p className="text-sm text-red-600 mt-1">{errors.posterUrl}</p>
@@ -300,7 +306,7 @@ export function MovieForm({
       <div>
         <Label
           htmlFor="synopsis"
-          className="text-sm font-medium text-gray-700 mb-1 block"
+          className="text-sm font-medium text-gray-300 mb-1 block"
         >
           Synopsis
         </Label>
@@ -313,7 +319,7 @@ export function MovieForm({
           placeholder="Movie synopsis"
           rows={4}
           disabled={isSubmitting}
-          className={errors.synopsis ? "border-red-500" : ""}
+          className={`${errors.synopsis ? "border-red-500" : ""} text-gray-300`}
         />
         {errors.synopsis && (
           <p className="text-sm text-red-600 mt-1">{errors.synopsis}</p>
@@ -321,19 +327,21 @@ export function MovieForm({
       </div>
 
       <div>
-        <Label className="text-sm font-medium text-gray-700 mb-2 block">
+        <Label className="text-sm font-medium text-gray-300 mb-2 block">
           Genres
         </Label>
         <div className="flex gap-2 mb-2">
           <select
             value={genreInput}
             onChange={(e) => setGenreInput(e.target.value)}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none text-gray-200"
             disabled={isSubmitting}
           >
-            <option value="">Select genre</option>
+            <option className="text-black" value="">
+              Select genre
+            </option>
             {ALL_GENRES.map((genre) => (
-              <option key={genre} value={genre}>
+              <option className="text-black" key={genre} value={genre}>
                 {genre}
               </option>
             ))}
@@ -342,7 +350,7 @@ export function MovieForm({
             type="button"
             onClick={handleAddGenre}
             disabled={!genreInput || isSubmitting}
-            className="bg-teal-600 hover:bg-teal-700"
+            className="bg-white text-black hover:bg-gray-200 cursor-pointer"
           >
             Add
           </Button>
@@ -351,14 +359,14 @@ export function MovieForm({
           {formData.genre.map((genre) => (
             <div
               key={genre}
-              className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+              className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm flex items-center gap-2"
             >
               {genre}
               <button
                 type="button"
                 onClick={() => handleRemoveGenre(genre)}
                 disabled={isSubmitting}
-                className="font-bold hover:text-teal-900"
+                className="font-bold hover:text-gray-400 cursor-pointer"
               >
                 ×
               </button>
@@ -371,7 +379,7 @@ export function MovieForm({
       </div>
 
       <div>
-        <Label className="text-sm font-medium text-gray-700 mb-2 block">
+        <Label className="text-sm font-medium text-gray-300 mb-2 block">
           Cast
         </Label>
         <div className="flex gap-2 mb-2">
@@ -383,12 +391,13 @@ export function MovieForm({
             onKeyDown={(e) =>
               e.key === "Enter" && (e.preventDefault(), handleAddCast())
             }
+            className="text-gray-200"
           />
           <Button
             type="button"
             onClick={handleAddCast}
             disabled={!castInput || isSubmitting}
-            className="bg-teal-600 hover:bg-teal-700"
+            className="bg-white text-black hover:bg-gray-200 cursor-pointer"
           >
             Add
           </Button>
@@ -397,14 +406,14 @@ export function MovieForm({
           {formData.cast.map((actor) => (
             <div
               key={actor}
-              className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+              className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm flex items-center gap-2"
             >
               {actor}
               <button
                 type="button"
                 onClick={() => handleRemoveCast(actor)}
                 disabled={isSubmitting}
-                className="font-bold hover:text-blue-900"
+                className="font-bold hover:text-gray-400 cursor-pointer"
               >
                 ×
               </button>
@@ -420,7 +429,7 @@ export function MovieForm({
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="bg-teal-600 hover:bg-teal-700 flex-1"
+          className="bg-white text-black hover:bg-gray-200 cursor-pointer flex-1"
         >
           {isSubmitting
             ? "Saving..."
