@@ -87,7 +87,6 @@ movie-project/
 - `npm run build` - Build production bundle
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm run format` - Format code with Prettier
 
 ## API Routes
 
