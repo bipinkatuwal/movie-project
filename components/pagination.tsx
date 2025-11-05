@@ -39,7 +39,7 @@ export function Pagination({
 
   return (
     <div className="bg-gray-900 rounded-lg p-6 space-y-4">
-      <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+      <div className="flex flex-col sm:flex-row gap-4 items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <span className="text-sm text-gray-400">Items per page:</span>
           <Select
@@ -113,7 +113,7 @@ export function Pagination({
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center justify-center md:justify-start">
         <Input
           type="number"
           min="1"

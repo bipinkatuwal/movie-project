@@ -17,7 +17,7 @@ import { fetchMovies, getAllGenres, getYearRange } from "@/lib/client";
 import { Movie, MoviesResponse } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowDownAZ, ArrowDownZA, ArrowUpDown } from "lucide-react";
 
 type SortBy = "title" | "year" | "rating" | "reviewCount";
 type Order = "asc" | "desc";
@@ -195,7 +195,11 @@ export default function Home() {
                   onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
                   className="border-gray-600 text-gray-600 hover:bg-teal-50"
                 >
-                  <ArrowUpDown className="w-4 h-4" />
+                  {order === "asc" ? (
+                    <ArrowDownAZ className="w-4 h-4" />
+                  ) : (
+                    <ArrowDownZA className="w-4 h-4" />
+                  )}
                 </Button>
               </div>
             </div>

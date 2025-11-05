@@ -8,7 +8,8 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { login } from "@/lib/client";
 import { toast } from "sonner";
-import { Lock } from "lucide-react";
+import { ArrowLeft, Lock } from "lucide-react";
+import Link from "next/link";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -41,7 +42,16 @@ export default function AdminLogin() {
   };
 
   return (
-    <main className="min-h-screen bg-black flex items-center justify-center px-4">
+    <main className="min-h-screen bg-black flex items-center flex-col justify-center px-4">
+      <Link
+        href="/"
+        className="self-start max-w-md mx-auto flex w-full justify-start"
+      >
+        <Button variant="ghost" className="mb-4 text-gray-200">
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Movies
+        </Button>
+      </Link>
       <Card className="w-full max-w-md">
         <div className="p-8">
           <div className="flex justify-center mb-6">

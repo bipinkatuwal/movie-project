@@ -91,7 +91,7 @@ export default function MovieDetail() {
           <Link href="/">
             <Button
               variant="ghost"
-              className="mb-4 text-teal-600 hover:text-teal-700"
+              className="mb-4 text-gray-200 hover:text-gray-300"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Movies

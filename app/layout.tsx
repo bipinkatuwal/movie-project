@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { NavigationBar } from "@/components/navigation-bar";
 import { Suspense } from "react";
+import ScrollToTop from "@/components/scroll-to-top";
 
 const inter = Inter({
   variable: "--font-inter-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
         className={`${inter.variable} ${sarpanch.variable} antialiased font-sans`}
       >
         <Suspense fallback={<div>Loading...</div>}>
+          <ScrollToTop />
           <NavigationBar />
           {children}
           <Toaster position="top-right" />

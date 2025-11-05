@@ -22,6 +22,8 @@ import {
   AlertDialogDescription,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import Image from "next/image";
+import MovieListSkeleton from "@/components/movies-skeleton";
 
 export default function AdminPanel() {
   const router = useRouter();
@@ -99,7 +101,7 @@ export default function AdminPanel() {
             <Button
               variant="outline"
               onClick={() => setExportMovie(true)}
-              className="bbg-white text-black hover:bg-gray-100"
+              className="bbg-white text-green-500 hover:text-green-600"
             >
               <Download className="w-4 h-4 mr-2" />
               Export CSV
@@ -108,7 +110,7 @@ export default function AdminPanel() {
             <Button
               variant="outline"
               onClick={handleLogout}
-              className="bg-white text-black hover:bg-gray-100"
+              className="bg-white text-red-500 hover:text-red-600"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -117,24 +119,34 @@ export default function AdminPanel() {
         </div>
 
         {loading ? (
-          <div className="text-center py-12">
-            <p className="text-gray-300">Loading movies...</p>
-          </div>
+          <MovieListSkeleton />
         ) : movies.length > 0 ? (
           <div className="grid gap-4">
             {movies.map((movie) => (
               <Card key={movie.id} className="p-4">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg text-gray-200">
-                      {movie.title}
-                    </h3>
-                    <p className="text-sm text-gray-300">
-                      {movie.year} • {movie.director} • {movie.genre.join(", ")}
-                    </p>
+                  <div className="flex md:flex-col gap-4">
+                    <div className="relative w-full h-20 max-w-20 bg-gray-200 overflow-hidden rounded-xl">
+                      <Image
+                        src={movie.posterUrl}
+                        alt={movie.title}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg text-gray-200">
+                        {movie.title}
+                      </h3>
+                      <p className="text-sm text-gray-300">
+                        {movie.year} • {movie.director} •{" "}
+                        {movie.genre.join(", ")}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 self-end">
                     <Button
                       asChild
                       variant="outline"
