@@ -11,7 +11,7 @@ interface ReviewFormProps {
   onSubmit: (
     userName: string,
     rating: number,
-    reviewText: string
+    reviewText: string,
   ) => Promise<void>;
   isSubmitting: boolean;
 }
@@ -62,10 +62,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <Label
-          htmlFor="userName"
-          className="text-sm font-medium text-gray-300 mb-1 block"
-        >
+        <Label htmlFor="userName" className="text-sm font-medium  mb-1 block">
           Your Name
         </Label>
         <Input
@@ -76,7 +73,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
           disabled={isSubmitting}
           className={`${
             errors.userName ? "border-red-500" : "border-gray-600"
-          } text-gray-200`}
+          } text-muted-foreground`}
         />
         {errors.userName && (
           <p className="text-sm text-red-600 mt-1">{errors.userName}</p>
@@ -84,9 +81,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
       </div>
 
       <div>
-        <Label className="text-sm font-medium text-gray-300 mb-2 block">
-          Rating
-        </Label>
+        <Label className="text-sm font-medium  mb-2 block">Rating</Label>
         <StarRating
           rating={rating}
           onRate={setRating}
@@ -100,10 +95,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
       </div>
 
       <div>
-        <Label
-          htmlFor="reviewText"
-          className="text-sm font-medium text-gray-300 mb-1 block"
-        >
+        <Label htmlFor="reviewText" className="text-sm font-medium mb-1 block">
           Your Review
         </Label>
         <Textarea
@@ -122,11 +114,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
         )}
       </div>
 
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full bg-white hover:bg-gray-200 text-black font-medium py-2"
-      >
+      <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? "Submitting..." : "Submit Review"}
       </Button>
     </form>

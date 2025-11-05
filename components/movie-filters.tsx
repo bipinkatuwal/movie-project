@@ -13,6 +13,22 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Search, X } from "lucide-react";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+} from "./ui/field";
 
 interface MovieFiltersProps {
   genres: string[];
@@ -46,7 +62,7 @@ export function MovieFilters({
       setLocalFilters(newFilters);
       onFilter(newFilters);
     },
-    [localFilters, onFilter]
+    [localFilters, onFilter],
   );
 
   const handleSearchChange = useCallback(
@@ -54,7 +70,7 @@ export function MovieFilters({
       const newFilters = { ...localFilters, search: e.target.value };
       setLocalFilters(newFilters);
     },
-    [localFilters]
+    [localFilters],
   );
 
   const handleSearchSubmit = useCallback(() => {
@@ -72,7 +88,7 @@ export function MovieFilters({
       setLocalFilters(newFilters);
       onFilter(newFilters);
     },
-    [localFilters, onFilter]
+    [localFilters, onFilter],
   );
 
   const handleClearFilters = useCallback(() => {
@@ -94,80 +110,79 @@ export function MovieFilters({
     localFilters.yearMax !== yearRange[1];
 
   return (
-    <div className="bg-gray-900 rounded-lg shadow-md p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-200">Filters</h2>
-        {hasActiveFilters && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleClearFilters}
-            className="text-gray-300 hover:bg-gray-800 hover:text-gray-200"
-          >
-            <X className="w-4 h-4 mr-1" />
-            Clear All
-          </Button>
-        )}
-      </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Filters</CardTitle>
+        <CardAction>
+          {hasActiveFilters && (
+            <Button
+              variant="destructive"
+              size="xs"
+              onClick={handleClearFilters}
+            >
+              <X />
+              Clear All
+            </Button>
+          )}
+        </CardAction>
+      </CardHeader>
 
-      <div className="space-y-2">
-        <Label htmlFor="search" className="text-sm font-medium text-gray-400">
-          Search
-        </Label>
-        <div className="flex gap-2 ">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              id="search"
-              placeholder="Search movies, directors..."
-              value={localFilters.search}
-              onChange={handleSearchChange}
-              className="pl-10 border-gray-500 text-gray-300"
-              onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+      <CardContent>
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="search">Search</FieldLabel>
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  id="search"
+                  placeholder="Search movies, directors..."
+                  value={localFilters.search}
+                  onChange={handleSearchChange}
+                  className="pl-10 border-input text-foreground"
+                  onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit()}
+                />
+              </div>
+              <Button onClick={handleSearchSubmit}>Search</Button>
+            </div>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="genre">Genre</FieldLabel>
+            <Select
+              value={localFilters.genre}
+              onValueChange={handleGenreChange}
+            >
+              <SelectTrigger id="genre" className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="">
+                <SelectItem value="all">All Genres</SelectItem>
+                {genres.map((genre) => (
+                  <SelectItem key={genre} value={genre}>
+                    {genre}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="year">
+              Year Range: {years[0]} - {years[1]}
+            </FieldLabel>
+            <Slider
+              id="year"
+              min={yearRange[0]}
+              max={yearRange[1]}
+              step={1}
+              value={years}
+              onValueChange={handleYearChange}
+              className="w-full"
             />
-          </div>
-          <Button
-            onClick={handleSearchSubmit}
-            className="bg-white text-gray-900 hover:bg-gray-200"
-          >
-            Search
-          </Button>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="genre" className="text-sm font-medium text-gray-400">
-          Genre
-        </Label>
-        <Select value={localFilters.genre} onValueChange={handleGenreChange}>
-          <SelectTrigger id="genre" className="border-gray-500 text-gray-400">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="">
-            <SelectItem value="all">All Genres</SelectItem>
-            {genres.map((genre) => (
-              <SelectItem key={genre} value={genre}>
-                {genre}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="year" className="text-sm font-medium text-gray-400">
-          Year Range: {years[0]} - {years[1]}
-        </Label>
-        <Slider
-          id="year"
-          min={yearRange[0]}
-          max={yearRange[1]}
-          step={1}
-          value={years}
-          onValueChange={handleYearChange}
-          className="w-full"
-        />
-      </div>
-    </div>
+          </Field>
+        </FieldGroup>
+      </CardContent>
+    </Card>
   );
 }

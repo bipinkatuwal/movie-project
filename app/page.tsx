@@ -1,10 +1,17 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+
 import { MovieCard } from "@/components/movie-card";
 import { MovieFilters, FilterState } from "@/components/movie-filters";
-import { Pagination } from "@/components/pagination";
+import { PaginationComponent } from "@/components/pagination";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -17,7 +24,8 @@ import { fetchMovies, getAllGenres, getYearRange } from "@/lib/client";
 import { Movie, MoviesResponse } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
-import { ArrowDownAZ, ArrowDownZA, ArrowUpDown } from "lucide-react";
+import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
+import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 
 type SortBy = "title" | "year" | "rating" | "reviewCount";
 type Order = "asc" | "desc";
@@ -26,191 +34,281 @@ export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // Data
   const [movies, setMovies] = useState<Movie[]>([]);
   const [displayedMovies, setDisplayedMovies] = useState<MoviesResponse | null>(
     null
   );
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [genres, setGenres] = useState<string[]>([]);
   const [yearRange, setYearRange] = useState<[number, number]>([1900, 2025]);
 
-  const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
-  const [genre, setGenre] = useState("all");
-  const [yearMin, setYearMin] = useState(yearRange[0]);
-  const [yearMax, setYearMax] = useState(yearRange[1]);
-  const [search, setSearch] = useState("");
+  // Controls
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
+  const [genre, setGenre] = useState<string>("all");
+  const [yearMin, setYearMin] = useState<number>(yearRange[0]);
+  const [yearMax, setYearMax] = useState<number>(yearRange[1]);
+  const [search, setSearch] = useState<string>("");
+  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
   const [sortBy, setSortBy] = useState<SortBy>("title");
   const [order, setOrder] = useState<Order>("asc");
 
-  const loadMovies = useCallback(async () => {
+  // Helpers to avoid overwriting URL params on first render and to ignore stale responses
+  const hydratedFromUrl = useRef(false);
+  const fetchToken = useRef(0);
+
+  // Load metadata (all movies) for filters like genres and year range
+  const loadAllMovies = useCallback(async () => {
     try {
-      setLoading(true);
+      const data = await fetchMovies(1, 1000);
+      setMovies(data.movies);
+      setGenres(getAllGenres(data.movies));
+      const range = getYearRange(data.movies);
+      setYearRange(range);
+
+      // initialize year bounds if unset
+      setYearMin((prev) => prev ?? range[0]);
+      setYearMax((prev) => prev ?? range[1]);
+    } catch (err) {
+      // Non-fatal: show console so developer can inspect
+      // Keep UI usable even if metadata fails
+      // eslint-disable-next-line no-console
+      console.error("Error loading all movies:", err);
+    }
+  }, []);
+
+  // Initialize component state from URL query params (run once on mount)
+  useEffect(() => {
+    if (!searchParams) return;
+
+    const pPage = searchParams.get("page");
+    const pLimit = searchParams.get("limit");
+    const pGenre = searchParams.get("genre");
+    const pYearMin = searchParams.get("yearMin");
+    const pYearMax = searchParams.get("yearMax");
+    const pSearch = searchParams.get("search");
+    const pSortBy = searchParams.get("sortBy");
+    const pOrder = searchParams.get("order");
+
+    if (pPage) {
+      const n = parseInt(pPage, 10);
+      if (!Number.isNaN(n) && n > 0) setPage(n);
+    }
+    if (pLimit) {
+      const n = parseInt(pLimit, 10);
+      if (!Number.isNaN(n) && n > 0) setLimit(n);
+    }
+    if (pGenre) setGenre(pGenre);
+    if (pYearMin) {
+      const n = parseInt(pYearMin, 10);
+      if (!Number.isNaN(n)) setYearMin(n);
+    }
+    if (pYearMax) {
+      const n = parseInt(pYearMax, 10);
+      if (!Number.isNaN(n)) setYearMax(n);
+    }
+    if (pSearch) {
+      setSearch(pSearch);
+      setDebouncedSearch(pSearch);
+    }
+    if (pSortBy && ["title", "year", "rating", "reviewCount"].includes(pSortBy))
+      setSortBy(pSortBy as SortBy);
+    if (pOrder && (pOrder === "asc" || pOrder === "desc"))
+      setOrder(pOrder as Order);
+
+    hydratedFromUrl.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // intentionally run once
+
+  // Load filter metadata once
+  useEffect(() => {
+    void loadAllMovies();
+  }, [loadAllMovies]);
+
+  // Debounce search input to avoid firing on every keystroke
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(search.trim()), 300);
+    return () => clearTimeout(t);
+  }, [search]);
+
+  // Fetch the paginated/filtered movies; use token to discard stale responses
+  const loadMovies = useCallback(async () => {
+    const token = ++fetchToken.current;
+    setLoading(true);
+    try {
       const data = await fetchMovies(
         page,
         limit,
         genre === "all" ? undefined : genre,
         yearMin,
         yearMax,
-        search,
+        debouncedSearch,
         sortBy,
         order
       );
+      // if a newer fetch started after this one, ignore this result
+      if (token !== fetchToken.current) return;
       setDisplayedMovies(data);
-    } catch (error) {
-      console.error("Error loading movies:", error);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Error loading movies:", err);
       toast.error("Failed to load movies");
     } finally {
-      setLoading(false);
+      if (token === fetchToken.current) setLoading(false);
     }
-  }, [page, limit, genre, yearMin, yearMax, search, sortBy, order]);
+  }, [page, limit, genre, yearMin, yearMax, debouncedSearch, sortBy, order]);
 
-  const loadAllMovies = useCallback(async () => {
-    try {
-      const data = await fetchMovies(1, 1000);
-      setMovies(data.movies);
-      setGenres(getAllGenres(data.movies));
-      setYearRange(getYearRange(data.movies));
-    } catch (error) {
-      console.error("Error loading all movies:", error);
-    }
-  }, []);
-
+  // Trigger movies fetch when relevant params change (debouncedSearch included)
   useEffect(() => {
-    loadAllMovies();
-  }, [loadAllMovies]);
-
-  useEffect(() => {
-    loadMovies();
+    void loadMovies();
   }, [loadMovies]);
 
+  // Sync state -> URL but avoid overwriting the initial URL on first mount
   useEffect(() => {
+    if (!hydratedFromUrl.current) {
+      // If we have not hydrated from URL yet, skip syncing and mark hydrated to allow sync
+      // on subsequent changes. This prevents an immediate push that wipes server-provided params.
+      hydratedFromUrl.current = true;
+      return;
+    }
+
     const params = new URLSearchParams();
-    params.set("page", page.toString());
-    params.set("limit", limit.toString());
-    if (genre !== "all") params.set("genre", genre);
-    if (yearMin !== yearRange[0]) params.set("yearMin", yearMin.toString());
-    if (yearMax !== yearRange[1]) params.set("yearMax", yearMax.toString());
-    if (search) params.set("search", search);
+    params.set("page", String(page));
+    params.set("limit", String(limit));
+    if (genre && genre !== "all") params.set("genre", genre);
+    if (yearMin !== yearRange[0]) params.set("yearMin", String(yearMin));
+    if (yearMax !== yearRange[1]) params.set("yearMax", String(yearMax));
+    if (debouncedSearch) params.set("search", debouncedSearch);
     if (sortBy !== "title") params.set("sortBy", sortBy);
     if (order !== "asc") params.set("order", order);
 
-    router.push(`?${params.toString()}`);
+    // Use replace to avoid creating a history entry for every small interaction
+    router.replace(`?${params.toString()}`);
   }, [
     page,
     limit,
     genre,
     yearMin,
     yearMax,
-    search,
+    debouncedSearch,
     sortBy,
     order,
     router,
     yearRange,
   ]);
 
+  const pathname = usePathname();
+  const prevPathRef = useRef<string | null>(null);
+
   useEffect(() => {
-    const paramsPage = searchParams.get("page");
-    const paramsLimit = searchParams.get("limit");
-    const paramsGenre = searchParams.get("genre");
-    const paramsYearMin = searchParams.get("yearMin");
-    const paramsYearMax = searchParams.get("yearMax");
-    const paramsSearch = searchParams.get("search");
-    const paramsSortBy = searchParams.get("sortBy");
-    const paramsOrder = searchParams.get("order");
+    const prev = prevPathRef.current;
+    // Only act on real navigations (prev exists and differs) and when target is root
+    if (prev && prev !== pathname && pathname === "/") {
+      // Reset filter state to defaults
+      setGenre("all");
+      setYearMin(yearRange[0]);
+      setYearMax(yearRange[1]);
+      setSearch("");
+      setDebouncedSearch("");
+      setPage(1);
 
-    if (paramsPage) setPage(parseInt(paramsPage, 10));
-    if (paramsLimit) setLimit(parseInt(paramsLimit, 10));
-    if (paramsGenre) setGenre(paramsGenre);
-    if (paramsYearMin) setYearMin(parseInt(paramsYearMin, 10));
-    if (paramsYearMax) setYearMax(parseInt(paramsYearMax, 10));
-    if (paramsSearch) setSearch(paramsSearch);
-    if (paramsSortBy) setSortBy(paramsSortBy as SortBy);
-    if (paramsOrder) setOrder(paramsOrder as Order);
-  }, [searchParams]);
+      // Ensure query string is cleared without adding history entry
+      router.replace("/");
+    }
+    // update previous path for next navigation
+    prevPathRef.current = pathname;
+  }, [pathname, router, yearRange]);
 
-  const handleFilter = (filters: FilterState) => {
+  // Handlers
+  const handleFilter = useCallback((filters: FilterState) => {
     setGenre(filters.genre);
     setYearMin(filters.yearMin);
     setYearMax(filters.yearMax);
     setSearch(filters.search);
     setPage(1);
-  };
+  }, []);
 
-  const handleSortChange = (field: SortBy) => {
-    if (sortBy === field) {
-      setOrder(order === "asc" ? "desc" : "asc");
-    } else {
-      setSortBy(field);
-      setOrder("asc");
-    }
+  const handleSortChange = useCallback((field: SortBy) => {
     setPage(1);
-  };
+    setSortBy((prev) => {
+      if (prev === field) {
+        setOrder((o) => (o === "asc" ? "desc" : "asc"));
+        return prev;
+      }
+      setOrder("asc");
+      return field;
+    });
+  }, []);
+
+  const rangeText = useMemo(() => {
+    if (!displayedMovies) return "Loading...";
+    const start = (displayedMovies.page - 1) * displayedMovies.limit + 1;
+    const end = Math.min(
+      displayedMovies.page * displayedMovies.limit,
+      displayedMovies.total
+    );
+    return `Showing ${start}-${end} of ${displayedMovies.total} movies`;
+  }, [displayedMovies]);
 
   return (
-    <main className="min-h-screen bg-black">
+    <main className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
-          <div className="lg:col-span-1">
+          <aside className="lg:col-span-1">
             <MovieFilters
               genres={genres}
               yearRange={yearRange}
               onFilter={handleFilter}
               currentFilters={{ genre, yearMin, yearMax, search }}
             />
-          </div>
+          </aside>
 
-          <div className="lg:col-span-3 space-y-8">
-            <div className="bg-gray-900 rounded-lg shadow-md p-4 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-              <div className="text-sm text-gray-400">
-                {displayedMovies
-                  ? `Showing ${
-                      (displayedMovies.page - 1) * displayedMovies.limit + 1
-                    }-${Math.min(
-                      displayedMovies.page * displayedMovies.limit,
-                      displayedMovies.total
-                    )} of ${displayedMovies.total} movies`
-                  : "Loading..."}
-              </div>
+          <section className="lg:col-span-3 space-y-8">
+            <Card className="py-4">
+              <CardHeader className="flex justify-between items-center">
+                <CardTitle>{rangeText}</CardTitle>
+                <CardAction className="flex gap-2">
+                  <Select
+                    value={sortBy}
+                    onValueChange={(val) => handleSortChange(val as SortBy)}
+                  >
+                    <SelectTrigger aria-label="Sort by" size="sm">
+                      <SelectValue />
+                    </SelectTrigger>
 
-              <div className="flex gap-2 flex-wrap">
-                <Select
-                  value={sortBy}
-                  onValueChange={(val) => handleSortChange(val as SortBy)}
-                >
-                  <SelectTrigger className="w-40 text-white border-gray-700">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="title">Sort by Title</SelectItem>
-                    <SelectItem value="year">Sort by Year</SelectItem>
-                    <SelectItem value="rating">Sort by Rating</SelectItem>
-                    <SelectItem value="reviewCount">Sort by Reviews</SelectItem>
-                  </SelectContent>
-                </Select>
+                    <SelectContent>
+                      <SelectItem value="title">Sort by Title</SelectItem>
+                      <SelectItem value="year">Sort by Year</SelectItem>
+                      <SelectItem value="rating">Sort by Rating</SelectItem>
+                      <SelectItem value="reviewCount">
+                        Sort by Reviews
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setOrder(order === "asc" ? "desc" : "asc")}
-                  className="border-gray-600 text-gray-600 hover:bg-teal-50"
-                >
-                  {order === "asc" ? (
-                    <ArrowDownAZ className="w-4 h-4" />
-                  ) : (
-                    <ArrowDownZA className="w-4 h-4" />
-                  )}
-                </Button>
-              </div>
-            </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      setOrder((o) => (o === "asc" ? "desc" : "asc"))
+                    }
+                    aria-label="Toggle sort order"
+                  >
+                    {order === "asc" ? (
+                      <ArrowDownAZ className="w-4 h-4" />
+                    ) : (
+                      <ArrowDownZA className="w-4 h-4" />
+                    )}
+                  </Button>
+                </CardAction>
+              </CardHeader>
+            </Card>
 
             {loading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[...Array(6)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="bg-gray-900 rounded-lg shadow-md overflow-hidden"
-                  >
+                {[...Array(8)].map((_, i) => (
+                  <div key={i} className="card overflow-hidden">
                     <Skeleton className="w-full h-72" />
                     <div className="p-4 space-y-3">
                       <Skeleton className="h-4 w-3/4" />
@@ -228,7 +326,7 @@ export default function Home() {
                   ))}
                 </div>
 
-                <Pagination
+                <PaginationComponent
                   currentPage={displayedMovies.page}
                   totalPages={displayedMovies.totalPages}
                   limit={displayedMovies.limit}
@@ -237,13 +335,13 @@ export default function Home() {
                 />
               </>
             ) : (
-              <div className="bg-black rounded-lg shadow-md p-12 text-center">
-                <p className="text-gray-400 text-lg">
+              <div className="card p-12 text-center">
+                <p className="text-muted text-lg">
                   No movies found matching your filters.
                 </p>
               </div>
             )}
-          </div>
+          </section>
         </div>
       </div>
     </main>
